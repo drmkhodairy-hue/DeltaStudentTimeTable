@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>تحميل الملفات</title>
+</head>
+<body>
+<h3>ادخل ID الطالب</h3>
+<input id="studentId" type="text">
+<button onclick="search()">بحث</button>
+<p id="result"></p>
+
+<script>
+// تحميل البيانات من ملف JSON
+let data = [];
+
+fetch('csvjsonDATA.json')
+  .then(response => response.json())
+  .then(json => data = json)
+  .catch(err => console.error("فشل تحميل البيانات:", err));
+
+function search() {
+  const id = document.getElementById("studentId").value;
+  // البحث باستخدام FileName
+  const student = data.find(s => s.FileName == id);
+  document.getElementById("result").innerHTML =
+    student ? `<a href="${student.FileLink}" target="_blank" download>تحميل الملف</a>`
+            : "ID غير موجود";
+}
+</script>
+
+</body>
+</html>
